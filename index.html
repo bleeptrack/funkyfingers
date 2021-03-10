@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the Paper.js library -->
+
+<meta name="viewport" content="width=700, initial-scale=1">
+<title>Some F*s to give</title>
+<meta name="description" content="Tired of everything? Generate some F*s">
+
+<script type="text/javascript" src="paper-full.js"></script>
+<script type="text/javascript" src="lodash.js"></script>
+<script type="text/javascript" src="Finger.js"></script>
+<!-- Define inlined PaperScript associate it with myCanvas -->
+<script type="text/javascript" src="generator.js">
+</script>
+
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+
+</head>
+<body>
+
+
+    <div id="canvwrap">
+        <canvas id="myCanvas" resize></canvas>
+	</div>
+	<div id="settingswrap">
+    <div class="seg">
+
+
+                <input type="color" id="boxcolor" name="boxcolor"
+                value="#f6b73c" onchange="changeColor(name,value)">
+
+
+
+
+                <input type="color" id="fillcolor1" name="fillcolor1"
+                value="#f6b73c" onchange="changeColor(name,value)">
+
+
+
+                <input type="color" id="fillcolor2" name="fillcolor2"
+                value="#f6b73c" onchange="changeColor(name,value)">
+
+
+
+                <input type="color" id="fillcolor3" name="fillcolor3"
+                value="#f6b73c" onchange="changeColor(name,value)">
+
+
+
+                <input type="color" id="fillcolor4" name="fillcolor4"
+                value="#f6b73c" onchange="changeColor(name,value)">
+
+        </div>
+
+        <div class="seg">
+        <button id="tinyFingers"  onclick="toggleFingers()">Tiny Fingers?</button>
+        <button id="shuffle"  onclick="shuffle()">Shuffle Colors</button>
+        <button id="new"  onclick="generate()">New</button>
+        </div>
+        <div>
+        <button id="savesvg"  onclick="downloadSVG()">Save SVG</button>
+        <button id="savepng"  onclick="downloadPNG()">Save PNG</button>
+        </div>
+
+
+    </div>
+    <div class="info"><a href="https://twitter.com/Bleeptrack">By @bleeptrack</a> - <a href="https://github.com/bleeptrack/funkyfingers">Code on Github</a> - <a href="https://www.patreon.com/Bleeptrack">Support me</a>
+    </div>
+</body>
+</html>
