@@ -82,18 +82,26 @@ class Finger{
         let s = new Path.Line(hand.bounds.topLeft, hand.bounds.bottomRight);
         let line = this.wiggleLine(s);
         console.log(line);
-        line.strokeColor = this.getRandomColor();
-        while(line.strokeColor.equals(h2.fillColor)){
-            line.strokeColor = this.getRandomColor();
-        }
-        line.strokeWidth = _.random(30, 100);
-        line.colorStroke = true;
+
         //line.selected = true;
         let lines = new CompoundPath(line);
+        if(_.random(0,1)==0){
+            let t = _.random(30,80);
+            let line2 = line.clone().translate([t, -t]);
+            lines.addChild(line2);
+        }
         lines.rotate(_.random(0, 360));
-        let g = new Group(hand, h2, line);
+
+        lines.strokeColor = this.getRandomColor();
+        while(lines.strokeColor.equals(h2.fillColor)){
+            lines.strokeColor = this.getRandomColor();
+        }
+        lines.strokeWidth = _.random(30, 100);
+        lines.strokeCap = 'round';
+
+        let g = new Group(hand, h2, lines);
         this.coloredObjs.push(h2);
-        this.coloredObjs.push(line);
+        this.coloredObjs.push(lines);
         g.clipped = true;
         if(this.offset){
             g.translate(this.bigHandOffset);
@@ -115,7 +123,6 @@ class Finger{
         }
         if(_.random(0,2)==0){
             p.smooth();
-            p.strokeCap = 'round';
         }
         return p;
     }

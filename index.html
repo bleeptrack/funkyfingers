@@ -25,6 +25,7 @@
         <canvas id="myCanvas" resize></canvas>
 	</div>
 	<div id="settingswrap">
+
     <div class="seg">
 
 
@@ -53,7 +54,9 @@
                 value="#f6b73c" onchange="changeColor(name,value)">
 
         </div>
-
+        <div class="seg">
+        <input type="number" id="sizex" name="sizex" value="420" onchange="changeSize(name,value)" autocomplete="off"><span>X</span><input type="number" id="sizey" name="sizey" value="420" onchange="changeSize(name,value)" autocomplete="off">
+	 </div>
         <div class="seg">
         <button id="tinyFingers"  onclick="toggleFingers()">Tiny Fingers?</button>
         <button id="shuffle"  onclick="shuffle()">Shuffle Colors</button>

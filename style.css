@@ -51,6 +51,26 @@ button{
   margin-bottom: 1em;
 }
 
+input{
+  height: 34px;
+  width: 5em;
+  text-decoration: none;
+  color: #FF00AA;
+  border: 2px solid #FF00AA;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  background-color: transparent;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield;
+}
+
 button:hover{
   color: 'white';
   border: 2px solid #AA00FF;
@@ -73,6 +93,13 @@ button:hover{
     margin: 0.5em;
     text-decoration: none;
     letter-spacing: 2px;
+}
+
+span{
+    margin: 0 0.5em;
+    text-decoration: none;
+    letter-spacing: 2px;
+    color: #AA00FF;
 }
 
 a{

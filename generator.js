@@ -3,6 +3,8 @@ let fingers;
 let handColors;
 let boxColor;
 let tinyFingers = true;
+let sizex = 420;
+let sizey = 420;
 paper.install(window);
 window.onload = function() {
 
@@ -15,22 +17,24 @@ window.onload = function() {
             '#00AAFF'
         ];
     colors = _.shuffle(colors);
-    fingers = new Finger([60*7, 60*7], colors, false);
+    fingers = new Finger([sizex, sizey], colors, false);
 
-    handColors = fingers.getHandColors();
-    boxColor = fingers.getBoxColor();
-    document.getElementById('boxcolor').value = boxColor;
-    document.getElementById('fillcolor1').value = handColors[0];
-    document.getElementById('fillcolor2').value = handColors[1];
-    document.getElementById('fillcolor3').value = handColors[2];
-    document.getElementById('fillcolor4').value = handColors[3];
+    updateElements();
 
 }
 
 function generate(){
     project.activeLayer.removeChildren();
-    fingers = new Finger([60*7, 60*7], handColors.concat([boxColor]), false);
+    fingers = new Finger([sizex, sizey], handColors.concat([boxColor]), false);
 
+    updateElements();
+
+    if(!tinyFingers){
+        fingers.removeTinyFingers();
+    }
+}
+
+function updateElements(){
     handColors = fingers.getHandColors();
     boxColor = fingers.getBoxColor();
     document.getElementById('boxcolor').value = boxColor;
@@ -38,10 +42,6 @@ function generate(){
     document.getElementById('fillcolor2').value = handColors[1];
     document.getElementById('fillcolor3').value = handColors[2];
     document.getElementById('fillcolor4').value = handColors[3];
-
-    if(!tinyFingers){
-        fingers.removeTinyFingers();
-    }
 }
 
 function shuffle(){
@@ -80,6 +80,16 @@ function toggleFingers(){
         fingers.insertTinyFingers();
     }
     tinyFingers = !tinyFingers;
+}
+
+function changeSize(name, value){
+    if(name == 'sizex'){
+        sizex = value;
+    }
+    if(name == 'sizey'){
+        sizey = value;
+    }
+
 }
 
 function changeStyle(val){
