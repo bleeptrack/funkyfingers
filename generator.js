@@ -1,47 +1,99 @@
 
 let fingers;
-let handColors;
-let boxColor;
+let handColors = [
+    '#FFAA00',
+    '#FF00AA',
+    '#AA00FF',
+    '#00AAFF'
+];
+let boxColor = '#AAFF00';
 let tinyFingers = true;
 let sizex = 420;
 let sizey = 420;
+let imgcount = 0;
+let recording = false;
 paper.install(window);
-window.onload = function() {
+window.onload = async function() {
+
 
     paper.setup('myCanvas');
-    let colors = [
-            '#AAFF00',
-            '#FFAA00',
-            '#FF00AA',
-            '#AA00FF',
-            '#00AAFF'
-        ];
-    colors = _.shuffle(colors);
-    fingers = new Finger([sizex, sizey], colors, false);
+    
 
-    updateElements();
+    let canvas = document.getElementById('myCanvas');
+    const recorder = new CanvasRecorder(canvas, 4500000);
+    var downloadLink = document.createElement("a");
+    document.body.appendChild(downloadLink);
 
+    shuffle();
+    generate();
+    
+    //genGrid();
+    //genStickers();
+    
+    if(recording){
+        recorder.start();
+    }
+    //genAnimation();
+
+
+    if(recording){
+        view.onClick = function(){
+            recorder.stop();
+            recorder.save('finger_motion.webm');
+        }
+    }
 }
 
-function generate(){
-    project.activeLayer.removeChildren();
-    fingers = new Finger([sizex, sizey], handColors.concat([boxColor]), false);
+function genAnimation(){
+    fingers = new Finger([sizex, sizey], view.bounds.center.add([-900,-400]), handColors.concat([boxColor]), false, 'animation');
+    let fingers1 = new Finger([sizex, sizey], view.bounds.center.add([-900,400]), handColors.concat([boxColor]), false, 'animation');
+    let fingers2 = new Finger([sizex, sizey], view.bounds.center.add([0,-400]), handColors.concat([boxColor]), false, 'animation');
+    let fingers3 = new Finger([sizex, sizey], view.bounds.center.add([0,400]), handColors.concat([boxColor]), false, 'animation');
+    let fingers4 = new Finger([sizex, sizey], view.bounds.center.add([900,-400]), handColors.concat([boxColor]), false, 'animation');
+    let fingers5 = new Finger([sizex, sizey], view.bounds.center.add([900,400]), handColors.concat([boxColor]), false, 'animation');
 
-    updateElements();
+    //fingers = new Finger([sizex, sizey], view.bounds.center, handColors.concat([boxColor]), false, 'animation');
+}
+
+function genStickers(){
+    fingers = new Finger([sizex, sizey], view.bounds.center, handColors.concat([boxColor]), false, 'sticker');
+}
+
+function genGrid(){
+    let s = 350;
+    let d = 150;
+
+    fingers = new Finger([s*2+d, s*2+d], [300+s+d/2, 300+s+d/2], handColors.concat([boxColor]), false);
+
+    let oldColors = [boxColor].concat(handColors);
+    let colors = _.shuffle(oldColors);
+    boxColor = colors.pop();
+    handColors = colors;
+    fingers = new Finger([s, s*3+d*2], [300+s*2.5+d*2, 300+s*1.5+d], handColors.concat([boxColor]), false);
+
+    oldColors = [boxColor].concat(handColors);
+    //colors = _.shuffle(oldColors);
+    boxColor = colors.pop();
+    handColors = colors;
+    fingers = new Finger([s, s], [300+s*0.5, 300+s*2.5+d*2], handColors.concat([boxColor]), false);
+
+    oldColors = [boxColor].concat(handColors);
+    //colors = _.shuffle(oldColors);
+    boxColor = colors.pop();
+    handColors = colors;
+    fingers = new Finger([s, s], [300+s*1.5+d, 300+s*2.5+d*2], handColors.concat([boxColor]), false);
+}
+
+function generate(text){
+    project.activeLayer.removeChildren();
+    let val = document.getElementById("textinput").value
+    fingers = new Finger([sizex, sizey], view.bounds.center, handColors.concat([boxColor]), false, 'none', val);
 
     if(!tinyFingers){
         fingers.removeTinyFingers();
     }
-}
+    
 
-function updateElements(){
-    handColors = fingers.getHandColors();
-    boxColor = fingers.getBoxColor();
-    document.getElementById('boxcolor').value = boxColor;
-    document.getElementById('fillcolor1').value = handColors[0];
-    document.getElementById('fillcolor2').value = handColors[1];
-    document.getElementById('fillcolor3').value = handColors[2];
-    document.getElementById('fillcolor4').value = handColors[3];
 }
 
 function shuffle(){
@@ -50,26 +102,32 @@ function shuffle(){
 
     boxC = colors.pop();
     handC = colors;
+    
+    if(fingers){
 
-    changeColor('boxcolor', Color.random());
-    changeColor('fillcolor1', Color.random());
-    changeColor('fillcolor2', Color.random());
-    changeColor('fillcolor3', Color.random());
-    changeColor('fillcolor4', Color.random());
+        changeColor('boxcolor', Color.random());
+        changeColor('fillcolor1', Color.random());
+        changeColor('fillcolor2', Color.random());
+        changeColor('fillcolor3', Color.random());
+        changeColor('fillcolor4', Color.random());
 
-    changeColor('boxcolor', boxC);
-    changeColor('fillcolor1', handC[0]);
-    changeColor('fillcolor2', handC[1]);
-    changeColor('fillcolor3', handC[2]);
-    changeColor('fillcolor4', handC[3]);
+        changeColor('boxcolor', boxC);
+        changeColor('fillcolor1', handC[0]);
+        changeColor('fillcolor2', handC[1]);
+        changeColor('fillcolor3', handC[2]);
+        changeColor('fillcolor4', handC[3]);
+    
+    }
 
+    handColors = handC;
+    boxColor = boxC;
     document.getElementById('boxcolor').value = boxColor;
     document.getElementById('fillcolor1').value = handColors[0];
     document.getElementById('fillcolor2').value = handColors[1];
     document.getElementById('fillcolor3').value = handColors[2];
     document.getElementById('fillcolor4').value = handColors[3];
-
-
+    
+    
 
 }
 
@@ -81,6 +139,10 @@ function toggleFingers(){
     }
     tinyFingers = !tinyFingers;
 }
+
+var changeText = _.debounce(function (text) {
+  generate(text);
+  }, 500);
 
 function changeSize(name, value){
     if(name == 'sizex'){

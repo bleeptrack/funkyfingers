@@ -9,10 +9,14 @@
 
 <script type="text/javascript" src="paper-full.js"></script>
 <script type="text/javascript" src="lodash.js"></script>
+
 <script type="text/javascript" src="Finger.js"></script>
+<script type="text/javascript" src="CanvasRecorder.js"></script>
+<script type="text/javascript" src="opentype.js"></script>
 <!-- Define inlined PaperScript associate it with myCanvas -->
-<script type="text/javascript" src="generator.js">
-</script>
+<script type="text/javascript" src="randomTexts.js"></script>
+<script type="text/javascript" src="generator.js"></script>
+
 
 <link rel="stylesheet" type="text/css" href="style.css"/>
 
@@ -55,7 +59,9 @@
 
         </div>
         <div class="seg">
-        <input type="number" id="sizex" name="sizex" value="420" onchange="changeSize(name,value)" autocomplete="off"><span>X</span><input type="number" id="sizey" name="sizey" value="420" onchange="changeSize(name,value)" autocomplete="off">
+        <!-- <input type="number" id="sizex" name="sizex" value="420" onchange="changeSize(name,value)" autocomplete="off"><span>X</span><input type="number" id="sizey" name="sizey" value="420" onchange="changeSize(name,value)" autocomplete="off">
+        <div class="seg"> -->
+        <input type="text" oninput="changeText(value)" placeholder="FUCK IT!" id="textinput" autocomplete="off"></input>
 	 </div>
         <div class="seg">
         <button id="tinyFingers"  onclick="toggleFingers()">Tiny Fingers?</button>
