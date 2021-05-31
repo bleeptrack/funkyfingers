@@ -6,5 +6,8 @@ var randomText = [
     'FUCK UPLOAD FILTERS',
     'FUCK 2020',
     'WHY ?',
-    'THIS SUCKS'
+    'THIS SUCKS',
+    'FUCK CRYPTO COINS',
+    'FUCK CAPITALISM',
+    'FUCK FRONTEX'
 ];
